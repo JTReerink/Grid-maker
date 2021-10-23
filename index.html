@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./Favicon/icons8-tower-64.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <title>Level Editor</title>
+</head>
+<body>
+    <div class="bovenBalk">
+        <div class="bovenBalkLinks">
+            <div class="right">
+                <p>Aantal rijen <input type="number" min="0" max="50" name="rij" id="rij"></p>
+            
+                <p>Aantal kolommen <input type="number" min="0" max="50" name="kolom" id="kolom"></p>
+            
+                <button id="createGridButton">Create Grid</button>
+            </div>
+        </div>
+        <div class="bovenBalkMid">
+            <div class="mapPalette" id="mapPalette">
+                
+            </div>
+        </div>
+        <div class="bovenBalkRechts">
+            <button id="save" class="save">Save Map</button>
+        </div>
+    </div>
+    
+    <div id="gridContainer" class="gridContainer"></div>
+    <script src="script.js"></script>
+</body>
+</html>
