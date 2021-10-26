@@ -71,14 +71,33 @@ function addTileSelector(name, color){
     
     let tileSelector = document.createElement("div");
     //alle informatie wat er mee gegeven moet worden aan het element
-    let size = 40;
-    let margin = 20;
+    let size = 60;
+    let margin = 30;
     tileSelector.id = name;
     tileSelector.className = 'selector';
     tileSelector.style.width = size + "px";
     tileSelector.style.height = size + "px";
     tileSelector.style.backgroundColor = color;
     tileSelector.style.left = selectorHolder.children.length * (size + margin) + margin + "px";
+    
+    let selectorTitle = document.createElement("p");
+    selectorTitle.innerHTML = name;
+    selectorTitle.id = "selectorTitle";
+    selectorTitle.style.color = "white";
+    selectorTitle.style.fontSize = "10px";
+    selectorTitle.style.fontWeight = "bold";
+    selectorTitle.style.textAlign = "center";
+    selectorTitle.style.marginLeft = "0px";
+    selectorTitle.style.marginTop = "45px";
+    selectorTitle.style.backgroundColor = "black";
+
+    tileSelector.appendChild(selectorTitle);
+    /*
+    tileSelector.innerHTML = name;
+    tileSelector.style.fontSize = "10px";
+    tileSelector.style.fontWeight = "bold";
+    tileSelector.style.textAlign = "center";
+    */
 
     //Het balkje 'selectorholder' neemt het net gemaakte element als child
     selectorHolder.appendChild(tileSelector);
@@ -92,7 +111,7 @@ function clickSelectors(){
     if(selectorHolder.children.length > 0){
         
         selectorHolder.addEventListener("click", (e) =>{
-            if(e.target.id != "mapPalette"){
+            if(e.target.id != "mapPalette" && e.target.id != "selectorTitle"){
                 
                 //ActiveSelector vernaderen naar de zojuist geklikte
                 activeSelector = e.target.id;

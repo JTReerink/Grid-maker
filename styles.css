@@ -19,7 +19,7 @@ background: linear-gradient(270deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba
 .bovenBalkMid{
     position: static;
     background-color: rgba(140, 228, 231, 0.884);
-    width: 400px;
+    width: 500px;
     height: 130px;
     border: 2px solid black;
 }
@@ -39,7 +39,7 @@ background: linear-gradient(270deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba
     top: 50%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .right {
