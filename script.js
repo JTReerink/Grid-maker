@@ -46,29 +46,6 @@ button.addEventListener("click", ()=> {
 
 })
 
-//functie voor SAVEBUTTON
-savebutton.addEventListener("click", ()=> {
-    
-    //functie test
-    console.log('Grid is saved');
-    
-    //lege Array waar info van elk blokje in komt
-    let tileData = [];
-    
-    for(let i = 0; i < container.children.length; i++){
-        
-        let color = container.children[i].style.backgroundColor;
-        
-        //Functie aanroepen die de key-value voor elke kleur vervangt
-        let type = getKeyByValue(colorDict, color);
-        
-        //info per blokje wordt in array geduwd
-        tileData.push(type);
-
-    }
-    //laten zien in console wat de inhoud is van de Array
-    console.log(tileData);
-});
 
 //Functie die elke kleur vervangt voor het begrip wat er aan is gekoppeld
 function getKeyByValue(object, value) {
@@ -149,3 +126,53 @@ function clickGridTiles(){
         }
     })
 }
+
+
+let tileData = [];
+//functie voor SAVEBUTTON
+savebutton.addEventListener("click", ()=> {
+    
+    //functie test
+    console.log('Grid is saved');
+    
+    //lege Array waar info van elk blokje in komt
+    
+    
+    for(let i = 0; i < container.children.length; i++){
+        
+        let color = container.children[i].style.backgroundColor;
+        
+        //Functie aanroepen die de key-value voor elke kleur vervangt
+        let type = getKeyByValue(colorDict, color);
+        
+        //info per blokje wordt in array geduwd
+        tileData.push(type);
+
+        
+
+    }
+    //laten zien in console wat de inhoud is van de Array
+    console.log(tileData);
+    
+    //Storing data
+    let finishedLevel = JSON.stringify(tileData);
+    console.log(finishedLevel);
+
+    download(finishedLevel, "map", "application/json");
+
+
+});
+
+function download (data, filename, type) {
+    let downloadHolder = document.getElementsByClassName("bovenBalkRechts");
+    let file = new Blob([data], {type: type});
+    let a = document.createElement('a');
+    let url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = filename;
+    console.log(url)
+    downloadHolder.appendChild(a);
+}
+
+
+// map.json
