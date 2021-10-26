@@ -25,11 +25,21 @@ background: linear-gradient(270deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba
 }
 
 .bovenBalkRechts{
-    position: static;
+    position: relative;
     background-color: rgba(140, 228, 231, 0.884);
-    width: 100px;
-    height: 130px;
+    width: 150px;
+    height: 80px;
+    margin-top: 50px;
     border: 2px solid black;
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .right {

@@ -158,11 +158,28 @@ savebutton.addEventListener("click", ()=> {
     let finishedLevel = JSON.stringify(tileData);
     console.log(finishedLevel);
 
-    download(finishedLevel, "map", "application/json");
+    download("map.json", finishedLevel)
+    //download(finishedLevel, "map.json"/*, "application/json"*/);
 
 
 });
 
+function download(filename, text) {
+    let a = document.createElement("a");
+    a.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    a.setAttribute('download', filename);
+
+    console.log(a);
+
+    a.style.display = 'none';
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+}
+
+/*
 function download (data, filename, type) {
     let downloadHolder = document.getElementsByClassName("bovenBalkRechts");
     let file = new Blob([data], {type: type});
@@ -173,6 +190,6 @@ function download (data, filename, type) {
     console.log(url)
     downloadHolder.appendChild(a);
 }
-
+*/
 
 // map.json
