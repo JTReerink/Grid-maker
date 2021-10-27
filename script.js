@@ -3,12 +3,12 @@ const gridArray = [];
 let button = document.getElementById("createGridButton");
 let savebutton =  document.getElementById("save");
 let container = document.getElementById("gridContainer");
-
-
+let rij
+let kolom
 //Het maken van het grid
 button.addEventListener("click", ()=> {
-    let rij = document.getElementById("rij").value;
-    let kolom = document.getElementById("kolom").value;
+    rij = document.getElementById("rij").value;
+    kolom = document.getElementById("kolom").value;
 
     //informatie die we aan elk blokje mee willen geven
     let tilesize = 40;
@@ -155,7 +155,7 @@ savebutton.addEventListener("click", ()=> {
     console.log('Grid is saved');
     
     //lege Array waar info van elk blokje in komt
-    
+
     
     for(let i = 0; i < container.children.length; i++){
         
@@ -166,9 +166,6 @@ savebutton.addEventListener("click", ()=> {
         
         //info per blokje wordt in array geduwd
         tileData.push(type);
-
-        
-
     }
     //laten zien in console wat de inhoud is van de Array
     console.log(tileData);
@@ -197,18 +194,3 @@ function download(filename, text) {
 
     document.body.removeChild(a);
 }
-
-/*
-function download (data, filename, type) {
-    let downloadHolder = document.getElementsByClassName("bovenBalkRechts");
-    let file = new Blob([data], {type: type});
-    let a = document.createElement('a');
-    let url = URL.createObjectURL(file);
-    a.href = url;
-    a.download = filename;
-    console.log(url)
-    downloadHolder.appendChild(a);
-}
-*/
-
-// map.json
