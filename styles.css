@@ -92,3 +92,13 @@ button:active {
 .mapPalette {
     position: absolute;
 }
+
+#selectorTitle {
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 0px;
+    margin-top: 45px;
+    background-color: black;
+}

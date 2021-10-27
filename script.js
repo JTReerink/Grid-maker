@@ -83,21 +83,8 @@ function addTileSelector(name, color){
     let selectorTitle = document.createElement("p");
     selectorTitle.innerHTML = name;
     selectorTitle.id = "selectorTitle";
-    selectorTitle.style.color = "white";
-    selectorTitle.style.fontSize = "10px";
-    selectorTitle.style.fontWeight = "bold";
-    selectorTitle.style.textAlign = "center";
-    selectorTitle.style.marginLeft = "0px";
-    selectorTitle.style.marginTop = "45px";
-    selectorTitle.style.backgroundColor = "black";
 
     tileSelector.appendChild(selectorTitle);
-    /*
-    tileSelector.innerHTML = name;
-    tileSelector.style.fontSize = "10px";
-    tileSelector.style.fontWeight = "bold";
-    tileSelector.style.textAlign = "center";
-    */
 
     //Het balkje 'selectorholder' neemt het net gemaakte element als child
     selectorHolder.appendChild(tileSelector);
