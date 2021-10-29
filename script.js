@@ -3,8 +3,9 @@ const gridArray = [];
 let button = document.getElementById("createGridButton");
 let savebutton =  document.getElementById("save");
 let container = document.getElementById("gridContainer");
-let rij
-let kolom
+let rij;
+let kolom;
+
 //Het maken van het grid
 button.addEventListener("click", ()=> {
     rij = document.getElementById("rij").value;
@@ -40,6 +41,9 @@ button.addEventListener("click", ()=> {
         
         //de plek waar het grid in komt neemt het gemaakte blokje als Child
         container.appendChild(tiles);
+
+        //reset waypoint teller
+        currentUnit.value = 1;
 
 
     }
@@ -80,14 +84,25 @@ function addTileSelector(name, color){
     tileSelector.style.backgroundColor = color;
     tileSelector.style.left = selectorHolder.children.length * (size + margin) + margin + "px";
     
+    //elke selector krijgt een titelbalk mee
     let selectorTitle = document.createElement("p");
     selectorTitle.innerHTML = name;
     selectorTitle.id = "selectorTitle";
-
-    tileSelector.appendChild(selectorTitle);
-
+    
+    
     //Het balkje 'selectorholder' neemt het net gemaakte element als child
     selectorHolder.appendChild(tileSelector);
+    if(name == "waypoint"){
+        let unit = document.createElement('input');
+        unit.type = "number";
+        unit.min = "1"
+        unit.value = 1;
+        unit.className = "unit";
+        unit.id = "masterUnit"
+        tileSelector.appendChild(unit);
+    }
+    tileSelector.appendChild(selectorTitle);
+    
 }
 
 clickSelectors();
@@ -98,20 +113,36 @@ function clickSelectors(){
     if(selectorHolder.children.length > 0){
         
         selectorHolder.addEventListener("click", (e) =>{
-            if(e.target.id != "mapPalette" && e.target.id != "selectorTitle"){
+            if(e.target.id != "mapPalette" && e.target.id != "unit"){
                 
                 //ActiveSelector vernaderen naar de zojuist geklikte
-                activeSelector = e.target.id;
+                if( e.target.id != "selectorTitle"){
+                    activeSelector = e.target.id;
+                
+                    //Weghalen van borders van alle selectors
+                    for(let i=0;i<selectorHolder.children.length;i++){
+                        selectorHolder.children[i].style.borderWidth = "1px";
+                        selectorHolder.children[i].style.boxShadow = "0px 0px 0px 0px";
+                    }
 
-                //Weghalen van borders van alle selectors
-                for(let i=0;i<selectorHolder.children.length;i++){
-                    selectorHolder.children[i].style.borderWidth = "1px";
-                    selectorHolder.children[i].style.boxShadow = "0px 0px 0px 0px"
+                    //Border aanpassen van ActiveSelector zodat zichtbaar is welke actief is
+                    e.target.style.borderWidth = "2.5px";
+                    e.target.style.boxShadow = "0px 0px 2px 2px purple";
                 }
+                if (e.target.id == "selectorTitle") {
+                    console.log(e.target.parentElement.id)
+                    activeSelector = e.target.parentElement.id;
+                
+                    //Weghalen van borders van alle selectors
+                    for(let i=0;i<selectorHolder.children.length;i++){
+                        selectorHolder.children[i].style.borderWidth = "1px";
+                        selectorHolder.children[i].style.boxShadow = "0px 0px 0px 0px";
+                    }
 
-                //Border aanpassen van ActiveSelector zodat zichtbaar is welke actief is
-                e.target.style.borderWidth = "2.5px";
-                e.target.style.boxShadow = "0px 0px 2px 2px purple"
+                    //Border aanpassen van ActiveSelector zodat zichtbaar is welke actief is
+                    e.target.parentElement.style.borderWidth = "2.5px";
+                    e.target.parentElement.style.boxShadow = "0px 0px 2px 2px purple";
+                }
             }
         })
     }
@@ -121,48 +152,86 @@ function clickSelectors(){
 //key-value pairs
 let colorDict = {spawnpoint: "red", path:"yellow", waypoint:"blue", buildable:"green", default:"lightgrey"}
 
-
+let currentUnit = document.getElementById("masterUnit");
 //Functie om blokjes in het grid clickbaar te maken
 function clickGridTiles(){
     container.addEventListener('click', (e) =>{
-        if(e.target.getAttribute('id')!="gridContainer"){
+        if(e.target.getAttribute('id')!="gridContainer" && e.target.getAttribute('id')!="unit"){
+                        
+            //nummer toevoegen wanneer het om WAYPOINT gaat
+            let unit;
+            if(activeSelector == "waypoint" && e.target.children.length != 1) {
+                unit = document.createElement('input');
+                unit.type = "number";
+                unit.min = "1"
+                unit.value = currentUnit.value;
+                unit.className = "unit";
+                unit.id = "unit"
+                currentUnit.value ++;
+                selectorUnit = currentUnit;
+                e.target.appendChild(unit);
+            } 
+
+            //nummer weghalen in tile wanneer je de kleur aanpast
+            if(e.target.getAttribute('id') === 'waypoint' && e.target.children.length == 1) {
+                e.target.removeChild(e.target.children[0]);
+                currentUnit.value --;                
+            }
             
             //het geklikte blokje neemt de kleur van de ActiveSelector over
             e.target.style.backgroundColor = colorDict[activeSelector];
+            //het blokje krijgt de huide kleur-value-pair als id mee
+            e.target.setAttribute('id', activeSelector);
+
+            e.target.setAttribute('value', currentUnit.value -1)
+            //getal in waypoint in het pallet wordt aangepast naar het nieuwe huidige waypoint-getal
+            currentUnit.setAttribute("value", currentUnit.value);
+            
         }
     })
 }
 
 
-let tileData = [];
 //functie voor SAVEBUTTON
 savebutton.addEventListener("click", ()=> {
-    
-    //functie test
-    console.log('Grid is saved');
+
+    //width data in losse array stoppen
+    let widthData = [];
+    let gridDimensie = kolom;
+    widthData.push("width: " + gridDimensie);
     
     //lege Array waar info van elk blokje in komt
-
-    
+    let tileData = [];
     for(let i = 0; i < container.children.length; i++){
         
         let color = container.children[i].style.backgroundColor;
+        let tileUnit = container.children[i].getAttribute('value');
         
         //Functie aanroepen die de key-value voor elke kleur vervangt
         let type = getKeyByValue(colorDict, color);
+
+        if(type == "waypoint"){
+            console.log("dit is een waypoint");
+            type += ": " + tileUnit;
+        }
         
         //info per blokje wordt in array geduwd
-        tileData.push(type);
+        tileData.push("type"+ ": " + type);
     }
+
+    //de twee array's combineren
+    let arrayForSave = widthData.concat([tileData]);
     //laten zien in console wat de inhoud is van de Array
-    console.log(tileData);
+    console.log(arrayForSave);
     
     //Storing data
-    let finishedLevel = JSON.stringify(tileData);
+    let finishedLevel = JSON.stringify(arrayForSave);
     console.log(finishedLevel);
 
-    download("map.json", finishedLevel)
-    //download(finishedLevel, "map.json"/*, "application/json"*/);
+
+
+
+    //download("map.json", finishedLevel)
 
 
 });
