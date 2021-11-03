@@ -12,10 +12,19 @@ button.addEventListener("click", ()=> {
     kolom = document.getElementById("kolom").value;
 
     //informatie die we aan elk blokje mee willen geven
-    let tilesize = 40;
+    let tilesize;
     let borderSize = 2;
     let tileCount = rij * kolom;
     
+    if(rij >= kolom){
+        tilesize = 500/rij;
+        console.log("ik doe nu gedeelt door rij" + rij + kolom)
+    } 
+    if(kolom > rij) {
+        tilesize = 500/kolom;
+        console.log("ik doe nu gedeeld door kolom" + rij + kolom)
+    }
+
     //Dit haalt een eerder gebouwd grid weg.
     for(let i = container.children.length-1; i > 0; i--){
         container.removeChild(container.children[i]);
@@ -113,7 +122,7 @@ function clickSelectors(){
     if(selectorHolder.children.length > 0){
         
         selectorHolder.addEventListener("click", (e) =>{
-            if(e.target.id != "mapPalette" && e.target.id != "unit"){
+            if(e.target.id != "mapPalette" && e.target.className != "unit"){
                 
                 //ActiveSelector vernaderen naar de zojuist geklikte
                 if( e.target.id != "selectorTitle"){
@@ -166,7 +175,7 @@ function clickGridTiles(){
                 unit.min = "1"
                 unit.value = currentUnit.value;
                 unit.className = "unit";
-                unit.id = "unit"
+                unit.id = "unit";
                 currentUnit.value ++;
                 selectorUnit = currentUnit;
                 e.target.appendChild(unit);
@@ -175,14 +184,15 @@ function clickGridTiles(){
             //nummer weghalen in tile wanneer je de kleur aanpast
             if(e.target.getAttribute('id') === 'waypoint' && e.target.children.length == 1) {
                 e.target.removeChild(e.target.children[0]);
-                currentUnit.value --;                
+                currentUnit.value --;
             }
             
             //het geklikte blokje neemt de kleur van de ActiveSelector over
             e.target.style.backgroundColor = colorDict[activeSelector];
             //het blokje krijgt de huide kleur-value-pair als id mee
             e.target.setAttribute('id', activeSelector);
-
+            
+            //blokje krijgt getal als value
             e.target.setAttribute('value', currentUnit.value -1)
             //getal in waypoint in het pallet wordt aangepast naar het nieuwe huidige waypoint-getal
             currentUnit.setAttribute("value", currentUnit.value);

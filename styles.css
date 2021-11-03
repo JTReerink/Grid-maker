@@ -64,8 +64,8 @@ button:active {
 .gridContainer{
     display: grid;
     background-color: cadetblue;
-    width: 1200px;
-    height: 600px;
+    width: 800px;
+    height: 500px;
     position: absolute;
     margin-top: 5px;
     margin-left: 5px;
